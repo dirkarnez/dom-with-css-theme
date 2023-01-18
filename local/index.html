@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            background: var(--color-secondary);
+        }
+        
+        #switch {
+            color: var(--font-color);
+            background: var(--color-primary);
+            padding: 10px 20px;
+            border: 0;
+            border-radius: 5px;
+        }
+        
+        h1 {
+            color: var(--font-color);
+        }
+
+        .theme-light {
+            --color-primary: #0060df;
+            --color-secondary: #fbfbfe;
+            --font-color: #000000;
+        }
+
+        .theme-dark {
+            --color-primary: #17ed90;
+            --color-secondary: #243133;
+            --font-color: #ffffff;
+        }
+
+        .local-theme-light {
+            --color-local-primary: #d12525;
+            background: var(--color-local-primary);
+        }
+
+        .local-theme-dark {
+            --color-local-primary: #798637;
+            background: var(--color-local-primary);
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%;">
+        <h1>Theme Switcher</h1>
+        <button id="switch" onclick="toggleTheme()">Switch</button>
+        <div id="local-theme-here" style="width: 100%;">
+            <h1>Theme Switcher (This element overlapping with global theme)</h1>
+            <button id="switch" onclick="toggleLocalTheme()">Switch (This element overlapping with global theme)</button>
+        </div>
+    </div>
+    <script>
+        // function to set a given theme/color-scheme
+        function setTheme(themeName) {
+            localStorage.setItem('theme', themeName);
+            // may use multiple classNames
+            document.documentElement.className = themeName;
+        }
+
+        function setLocalTheme(outMostDomElement, localThemeName) {
+            localStorage.setItem('local-theme', localThemeName);
+            // may use multiple classNames
+            outMostDomElement.className = localThemeName;
+        }
+
+        // function to toggle between light and dark theme
+        function toggleTheme() {
+            if (localStorage.getItem('theme') === 'theme-dark') {
+                setTheme('theme-light');
+            } else {
+                setTheme('theme-dark');
+            }
+        }
+
+        // function to toggle between light and dark theme
+        function toggleLocalTheme() {
+            const target = document.getElementById("local-theme-here");
+            if (localStorage.getItem('local-theme') === 'local-theme-dark') {
+                setLocalTheme(target, 'local-theme-light');
+            } else {
+                setLocalTheme(target, 'local-theme-dark');
+            }
+        }
+
+        // Immediately invoked function to set the theme on initial load
+        (function () {
+            setTheme(localStorage.getItem('theme'));
+            setLocalTheme(document.getElementById("local-theme-here"), localStorage.getItem('local-theme'));
+        })();
+    </script>
+</body>
+
+</html>
