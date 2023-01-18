@@ -96,10 +96,10 @@
         // Immediately invoked function to set the theme on initial load
         (function () {
             const globalTheme = localStorage.getItem('theme');
-            setTheme(globalTheme != "null" ? globalTheme : "theme-light");
+            setTheme(globalTheme === "theme-dark" ? globalTheme : "theme-light");
             
             const localTheme = localStorage.getItem('local-theme');
-            setLocalTheme(document.getElementById("local-theme-here"), localTheme != "null" ? localTheme : "local-theme-light");
+            setLocalTheme(document.getElementById("local-theme-here"), localTheme === "local-theme-dark" ? localTheme : "local-theme-light");
         })();
     </script>
 </body>
